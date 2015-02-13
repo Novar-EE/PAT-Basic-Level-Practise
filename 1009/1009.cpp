@@ -8,11 +8,6 @@
 int main()
 {
 	
-//	char *tmp;
-//	scanf("%s\n", tmp);
-//	std::string in_str(tmp);
-	
-//	std::cin >> in_str;
 	std::stack<std::string> stack_str;
 	
 	while(true){
