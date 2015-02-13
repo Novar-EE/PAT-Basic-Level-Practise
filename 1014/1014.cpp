@@ -1,39 +1,71 @@
 #include <iostream>
-#include <vector>
 #include <string>
 #include <algorithm>
+#include <vector>
 
-// 提交时把MAX改打... 
-#define MAX 10000
+
+std::string week[7] = {
+	"MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"
+};
 
 int main()
 {
-	short array[MAX] = {0};
-	int M = 0, N = 0;
-	std::vector<int> vec_res;
+	char day, hour;
+	int minute = 0;
 	
-	scanf("%d %d", &M, &N);
+	std::string str[4];
+	for (int i = 0; i < 4; i ++){
+		std::cin >> str[i];
+	}
 	
-	for (int i = 2; i <= MAX; i ++){
-		if (array[i] == 0){
-			vec_res.push_back(i);
-			int tmp = i;
-			while(tmp <= MAX){
-				array[tmp] = 1;
-				tmp = tmp + i;
+	int i = 0;
+	while(true){
+		if ((str[0][i] >= 'A' && str[0][i] <= 'G') && (str[1][i] >= 'A' && str[1][i] <= 'G')){
+			if (str[0][i] == str[1][i]){
+				day = str[0][i]; i ++; break;
 			}
-		}	
+		}
+		i ++;
+		if (i > str[0].length() || i > str[1].length()) break;
 	}
-
-	int cnt = 0;
-	for (int i = M - 1; i <= N - 1; i ++){
-		cnt ++;
-		std::cout << vec_res[i];
-		if (i == N - 1 || cnt % 10 == 0) std::cout << std::endl;
-		else std::cout << " ";
-		
+	while(true){
+		if (((str[0][i] >= 'A' && str[0][i] <= 'N') || (str[0][i] >= '0' && str[0][i] <= '9')) && \
+			((str[1][i] >= 'A' && str[1][i] <= 'N') || (str[0][i] >= '0' && str[0][i] <= '9'))){
+			if (str[0][i] == str[1][i]){
+				hour = str[0][i]; break;
+			}
+		}
+		i ++;
+		if (i > str[0].length() || i > str[1].length()) break;
+	}	
+	
+	i = 0;
+	while(true){
+//		if (((str[2][i] >= 'a' && str[2][i] <= 'z')) && \
+//			((str[3][i] >= 'a' && str[3][i] <= 'z'))){
+		if (((str[2][i] >= 'a' && str[2][i] <= 'z') || (str[2][i] >= 'A' && str[2][i] <= 'X')) && \
+			((str[3][i] >= 'a' && str[3][i] <= 'z') || (str[2][i] >= 'A' && str[2][i] <= 'Z'))){
+			if (str[2][i] == str[3][i]){
+				minute = i; break;
+			}
+		}
+		i ++;
+		if (i > str[2].length() || i > str[3].length()) break;
 	}
+	
+	std::cout << week[day - 'A'] << " ";
+	
+	if (hour >= '0' && hour <= '9'){
+		std::cout << "0" << hour - '0';
+	}
+	else if (hour >= 'A' && hour <= 'N'){
+		std::cout << hour - 'A' + 10;
+	}
+	std::cout << ":";
+	if (minute < 10)
+		std::cout << "0";
+	std::cout << minute << std::endl;
 
+	
 	
 }
-

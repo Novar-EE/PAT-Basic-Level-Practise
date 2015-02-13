@@ -1,71 +1,98 @@
 #include <iostream>
-#include <string>
+#include <stdio.h>
 #include <algorithm>
 #include <vector>
 
-
-std::string week[7] = {
-	"MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"
+class student_info
+{
+public:
+	int ID;
+	int score_1;	// 德分 
+	int score_2;	// 才分 
+	int score_total;
 };
+
+bool cmp(const student_info &arg1, const student_info &arg2)
+{
+	if (arg1.score_total == arg2.score_total){
+		if (arg1.score_1 == arg2.score_1)
+			return(arg1.ID < arg2.ID);
+		return(arg1.score_1 > arg2.score_1);
+	}
+	return(arg1.score_total > arg2.score_total);
+
+/*
+	if (arg1.score_total != arg2.score_total)
+		return(arg1.score_total > arg2.score_total);		
+	else if (arg1.score_1 != arg2.score_1)
+		return(arg1.score_1 > arg2.score_1);
+	else
+		return(arg1.ID < arg2.ID);
+*/
+}
+
+void print_vec(std::vector<student_info>::iterator iter_start, std::vector<student_info>::iterator iter_end)
+{
+	for (std::vector<student_info>::iterator iter = iter_start; iter != iter_end; iter ++){
+		std::cout << iter->ID << " " << iter->score_1 << " " << iter->score_2 << std::endl;
+	}
+}
+
+
 
 int main()
 {
-	char day, hour;
-	int minute = 0;
+	int N, L, H;
+	scanf("%d %d %d", &N, &L, &H);
+//	std::vector<student_info> vec[4];
+	student_info vec[4][100010];
+	int vec_size[4] = {0};
 	
-	std::string str[4];
+	for (int i = 0; i < N; i ++){
+		student_info tmp;
+		scanf("%d %d %d", &tmp.ID, &tmp.score_1, &tmp.score_2);
+		tmp.score_total = tmp.score_1 + tmp.score_2;
+		if (tmp.score_1 >= L && tmp.score_2 >= L){
+			if (tmp.score_1 >= H && tmp.score_2 >= H){
+				//vec[0].push_back(tmp);
+				vec[0][vec_size[0]] = tmp;
+				vec_size[0] ++;
+			}
+			else if (tmp.score_1 >= H && tmp.score_2 < H){
+				//vec[1].push_back(tmp);
+				vec[1][vec_size[1]] = tmp;
+				vec_size[1] ++;
+			}
+			else if (tmp.score_1 < H && tmp.score_2 < H && tmp.score_1 >= tmp.score_2){
+				//vec[2].push_back(tmp);
+				vec[2][vec_size[2]] = tmp;
+				vec_size[2] ++;
+			}
+			else{
+				//vec[3].push_back(tmp);
+				vec[3][vec_size[3]] = tmp;
+				vec_size[3] ++;
+			}
+		}		
+	}
+	
+	int tot = 0;
 	for (int i = 0; i < 4; i ++){
-		std::cin >> str[i];
+		tot += vec_size[i];
 	}
+	std::cout << tot << std::endl;
 	
-	int i = 0;
-	while(true){
-		if ((str[0][i] >= 'A' && str[0][i] <= 'G') && (str[1][i] >= 'A' && str[1][i] <= 'G')){
-			if (str[0][i] == str[1][i]){
-				day = str[0][i]; i ++; break;
-			}
-		}
-		i ++;
-		if (i > str[0].length() || i > str[1].length()) break;
-	}
-	while(true){
-		if (((str[0][i] >= 'A' && str[0][i] <= 'N') || (str[0][i] >= '0' && str[0][i] <= '9')) && \
-			((str[1][i] >= 'A' && str[1][i] <= 'N') || (str[0][i] >= '0' && str[0][i] <= '9'))){
-			if (str[0][i] == str[1][i]){
-				hour = str[0][i]; break;
-			}
-		}
-		i ++;
-		if (i > str[0].length() || i > str[1].length()) break;
-	}	
-	
-	i = 0;
-	while(true){
-//		if (((str[2][i] >= 'a' && str[2][i] <= 'z')) && \
-//			((str[3][i] >= 'a' && str[3][i] <= 'z'))){
-		if (((str[2][i] >= 'a' && str[2][i] <= 'z') || (str[2][i] >= 'A' && str[2][i] <= 'X')) && \
-			((str[3][i] >= 'a' && str[3][i] <= 'z') || (str[2][i] >= 'A' && str[2][i] <= 'Z'))){
-			if (str[2][i] == str[3][i]){
-				minute = i; break;
-			}
-		}
-		i ++;
-		if (i > str[2].length() || i > str[3].length()) break;
-	}
-	
-	std::cout << week[day - 'A'] << " ";
-	
-	if (hour >= '0' && hour <= '9'){
-		std::cout << "0" << hour - '0';
-	}
-	else if (hour >= 'A' && hour <= 'N'){
-		std::cout << hour - 'A' + 10;
-	}
-	std::cout << ":";
-	if (minute < 10)
-		std::cout << "0";
-	std::cout << minute << std::endl;
+	for (int i = 0; i < 4; i ++){
+		//std::cout << i << std::endl;
+		std::sort(vec[i], vec[i] + vec_size[i], cmp);
+		
+		for (int j = 0; j < vec_size[i]; j ++){
+			printf("%d %d %d\n", vec[i][j].ID, vec[i][j].score_1, vec[i][j].score_2);
 
-	
-	
+		}
+//		std::cout << vec[i][j].ID << " " << vec[i][j].score_1 << " " << vec[i][j].score_2 << std::endl;
+//		print_vec(vec[i].begin(), vec[i].end());
+	}
+
+
 }
