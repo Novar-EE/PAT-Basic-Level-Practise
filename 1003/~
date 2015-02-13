@@ -1,0 +1,30 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+class student_info
+{
+public:
+	char name[10];
+	char ID[10];
+	int score;
+
+};
+
+
+int main()
+{
+	int student_num = 0;
+	std::cin >> student_num;
+	std::vector<student_info> vec_student;
+	
+	for (int i = 0; i < student_num; i ++){
+		student_info tmp;
+		scanf("%s %s %d\n", &tmp.name, &tmp.ID, &tmp.score);
+	}
+	
+	std::cout << vec_student[1].name << std::endl;
+	
+}
+
+

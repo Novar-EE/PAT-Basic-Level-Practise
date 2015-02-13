@@ -1,0 +1,28 @@
+#include <iostream>
+#include <algorithm>
+#include <string>
+#include <vector>
+#include <stdio.h>
+
+
+int main()
+{
+	int N = 0;
+	scanf("%d", &N);
+	
+	std::vector<int> vec_array;
+	for (int i = 0; i < N; i ++){
+		int tmp;
+		scanf("%d ", &tmp);
+		vec_array.push_back(tmp);
+	}
+	
+	for (std::vector<int>::iterator iter = vec_array.begin(); iter != vec_array.end(); iter ++){
+		std::cout << *iter << " ";
+	}
+	
+	
+
+}
+
+
