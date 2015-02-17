@@ -36,7 +36,7 @@ int main()
 				M_index = M_index + 100;
 			else
 				M_index = N - 1;
-		}		
+		}
 		while (A[M_index] > m && A[M_index] > mp){
 			M_index = M_index - 1;
 		}
