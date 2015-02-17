@@ -11,7 +11,7 @@ int main()
 	long long p;
 	scanf("%d %lld\n", &N, &p);
 	for (int i = 0; i < N; i ++){
-		scanf("%d", &A[i]); getchar();
+		scanf("%lld", &A[i]); getchar();
 	}	
 	
 	int len = 0;
@@ -24,9 +24,17 @@ int main()
 		m = A[i];
 		double mp = 1.0 * m * p;
 		M_index = N - 1;
+		
+		if (N > 1000){
+			while (A[M_index] > m && A[M_index] > mp){
+				M_index = M_index - 100;
+			}
+			//M_index = M_index + 100;
+		}		
 		while (A[M_index] > m && A[M_index] > mp){
-			M_index --;
+			M_index = M_index - 1;
 		}
+		
 		int tmp_len = M_index - i + 1;
 		if (len < tmp_len){
 			len = tmp_len;
