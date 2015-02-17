@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <stdlib.h>
 
+
 long long A[100010] = {0};
 
 int main()
@@ -26,14 +27,20 @@ int main()
 		M_index = N - 1;
 		
 		if (N > 1000){
+			// 数据量较大时快速搜索 
 			while (A[M_index] > m && A[M_index] > mp){
 				M_index = M_index - 100;
 			}
-			//M_index = M_index + 100;
+			// 直接+100数组可能 会越界 
+			if (M_index + 100 < N)
+				M_index = M_index + 100;
+			else
+				M_index = N - 1;
 		}		
 		while (A[M_index] > m && A[M_index] > mp){
 			M_index = M_index - 1;
 		}
+		//printf("%d %d\n", i, M_index);
 		
 		int tmp_len = M_index - i + 1;
 		if (len < tmp_len){
