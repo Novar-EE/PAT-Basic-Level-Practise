@@ -4,6 +4,8 @@
 #include <vector>
 #include <stdlib.h>
 
+// 按照标准的链表逆序操作，运行超时 
+
 class Node
 {
 public:
